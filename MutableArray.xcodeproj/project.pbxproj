@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		091458CE1FDE9689005DD3CD /* MutableArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 091458CD1FDE9689005DD3CD /* MutableArrayTests.m */; };
+		091458D31FDE9693005DD3CD /* MutableIntArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 097D92B31FDE938500E9739A /* MutableIntArrayTests.m */; };
+		091458D41FDE9733005DD3CD /* MutableIntArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A3ACF61FCF42430000F30F /* MutableIntArray.m */; };
 		09A3ACEC1FCF41F70000F30F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A3ACEB1FCF41F70000F30F /* main.m */; };
 		09A3ACF71FCF42430000F30F /* MutableIntArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A3ACF61FCF42430000F30F /* MutableIntArray.m */; };
 /* End PBXBuildFile section */
@@ -24,6 +27,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		091458CB1FDE9689005DD3CD /* MutableArrayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MutableArrayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		091458CD1FDE9689005DD3CD /* MutableArrayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MutableArrayTests.m; sourceTree = "<group>"; };
+		091458CF1FDE9689005DD3CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		097D92B31FDE938500E9739A /* MutableIntArrayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MutableIntArrayTests.m; sourceTree = "<group>"; };
+		097D92BB1FDE943100E9739A /* MutableArrayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MutableArrayTests.m; sourceTree = "<group>"; };
+		097D92BD1FDE943100E9739A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09A3ACE81FCF41F70000F30F /* MutableArray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MutableArray; sourceTree = BUILT_PRODUCTS_DIR; };
 		09A3ACEB1FCF41F70000F30F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		09A3ACF51FCF42430000F30F /* MutableIntArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MutableIntArray.h; sourceTree = "<group>"; };
@@ -31,6 +40,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		091458C81FDE9689005DD3CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		09A3ACE51FCF41F70000F30F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -41,10 +57,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		091458CC1FDE9689005DD3CD /* MutableArrayTests */ = {
+			isa = PBXGroup;
+			children = (
+				091458CD1FDE9689005DD3CD /* MutableArrayTests.m */,
+				091458CF1FDE9689005DD3CD /* Info.plist */,
+			);
+			path = MutableArrayTests;
+			sourceTree = "<group>";
+		};
+		097D92BA1FDE943100E9739A /* MutableArrayTests */ = {
+			isa = PBXGroup;
+			children = (
+				097D92BB1FDE943100E9739A /* MutableArrayTests.m */,
+				097D92BD1FDE943100E9739A /* Info.plist */,
+			);
+			path = MutableArrayTests;
+			sourceTree = "<group>";
+		};
 		09A3ACDF1FCF41F70000F30F = {
 			isa = PBXGroup;
 			children = (
 				09A3ACEA1FCF41F70000F30F /* MutableArray */,
+				097D92BA1FDE943100E9739A /* MutableArrayTests */,
+				091458CC1FDE9689005DD3CD /* MutableArrayTests */,
 				09A3ACE91FCF41F70000F30F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				09A3ACE81FCF41F70000F30F /* MutableArray */,
+				091458CB1FDE9689005DD3CD /* MutableArrayTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,6 +100,7 @@
 				09A3ACEB1FCF41F70000F30F /* main.m */,
 				09A3ACF51FCF42430000F30F /* MutableIntArray.h */,
 				09A3ACF61FCF42430000F30F /* MutableIntArray.m */,
+				097D92B31FDE938500E9739A /* MutableIntArrayTests.m */,
 			);
 			path = MutableArray;
 			sourceTree = "<group>";
@@ -70,6 +108,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		091458CA1FDE9689005DD3CD /* MutableArrayTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 091458D01FDE9689005DD3CD /* Build configuration list for PBXNativeTarget "MutableArrayTests" */;
+			buildPhases = (
+				091458C71FDE9689005DD3CD /* Sources */,
+				091458C81FDE9689005DD3CD /* Frameworks */,
+				091458C91FDE9689005DD3CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MutableArrayTests;
+			productName = MutableArrayTests;
+			productReference = 091458CB1FDE9689005DD3CD /* MutableArrayTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		09A3ACE71FCF41F70000F30F /* MutableArray */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 09A3ACEF1FCF41F70000F30F /* Build configuration list for PBXNativeTarget "MutableArray" */;
@@ -96,6 +151,10 @@
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = andrius;
 				TargetAttributes = {
+					091458CA1FDE9689005DD3CD = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 					09A3ACE71FCF41F70000F30F = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
@@ -115,11 +174,32 @@
 			projectRoot = "";
 			targets = (
 				09A3ACE71FCF41F70000F30F /* MutableArray */,
+				091458CA1FDE9689005DD3CD /* MutableArrayTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		091458C91FDE9689005DD3CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		091458C71FDE9689005DD3CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				091458D31FDE9693005DD3CD /* MutableIntArrayTests.m in Sources */,
+				091458CE1FDE9689005DD3CD /* MutableArrayTests.m in Sources */,
+				091458D41FDE9733005DD3CD /* MutableIntArray.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		09A3ACE41FCF41F70000F30F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -132,6 +212,34 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		091458D11FDE9689005DD3CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = NFA8F38A32;
+				INFOPLIST_FILE = MutableArrayTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = test.MutableArrayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		091458D21FDE9689005DD3CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = NFA8F38A32;
+				INFOPLIST_FILE = MutableArrayTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = test.MutableArrayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		09A3ACED1FCF41F70000F30F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -256,6 +364,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		091458D01FDE9689005DD3CD /* Build configuration list for PBXNativeTarget "MutableArrayTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				091458D11FDE9689005DD3CD /* Debug */,
+				091458D21FDE9689005DD3CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		09A3ACE31FCF41F70000F30F /* Build configuration list for PBXProject "MutableArray" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

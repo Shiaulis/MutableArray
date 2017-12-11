@@ -7,7 +7,25 @@
 		<key>MutableArray.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+		<key>MutableArrayTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>091458CA1FDE9689005DD3CD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>09A3ACE71FCF41F70000F30F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

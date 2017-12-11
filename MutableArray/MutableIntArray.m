@@ -31,14 +31,15 @@
 }
 
 - (instancetype)initWithCapacity:(NSUInteger)capacity {
-
+    
     if (0 == capacity) {
+        // :))))
         NSAssert(NO, @"No ability to create array with zero capacity. Capacity '1' will be used instead.");
         capacity = 1;
         return nil;
     }
     self = [super init];
-	
+    
     if (self) {
         _startPointer = malloc(sizeof(int) * capacity);
         if (nil == _startPointer) {
@@ -55,6 +56,7 @@
 
 - (int)objectAtIndex:(NSUInteger)index {
     if (index >= self.size) {
+        // I would use @throw and remove redundand return 0;
         NSString *exceptionReason = [NSString stringWithFormat:@"Attempt to access object with index %lu out of arrray bounds", index];
         [[NSException exceptionWithName:@"MutableIntArrayException"
                                  reason:exceptionReason
@@ -71,6 +73,15 @@
 - (void)addObject:(int)anInteger {
     if (self.size >= self.capacity) {
         if (NO == [self doubleArrayCapacity]) {
+            // 1. again, I would just throw and remove return
+            // throw automatically exits this function and rolls back until it is processed in a catch,
+            // or the default handler is reached (crash)
+            //
+            // 2. I would place the throw in doubleArrayCapacity and don't duplicate the code
+            //
+            // 3. I would prefer not to mention current increase size strategy (double)
+            //    in method name. When you decide to use 1.4 instead of 2, would you rename the method?
+            //
             NSString *exceptionReason = @"Failed to increase array capacity";
             [[NSException exceptionWithName:@"MutableIntArrayException"
                                      reason:exceptionReason
@@ -79,9 +90,9 @@
             return;
         }
     }
-
+    
     *(self.startPointer + self.size) = anInteger;
-
+    
     self.size += 1;
 }
 
@@ -95,7 +106,7 @@
          raise];
         return;
     }
-
+    
     if (self.size >= self.capacity) {
         if (NO == [self doubleArrayCapacity]) {
             NSString *exceptionReason = @"Failed to increase array capacity";
@@ -106,13 +117,13 @@
             return;
         }
     }
-	
+    
     if (index != self.size) {
         [self shiftArrayInMemoryFromIndex:index toIndex:index + 1];
     }
-
+    
     *(self.startPointer + index) = anInteger;
-
+    
     self.size += 1;
 }
 
@@ -126,11 +137,12 @@
          raise];
         return;
     }
-
+    
     NSUInteger otherArrayElementsCount = otherArray.count;
-	// не понял. Пустой добавить нельзя. А чего?
+    // still don't understand
+    // не понял. Пустой добавить нельзя. А чего?
     NSParameterAssert(otherArrayElementsCount);
-
+    
     NSUInteger const newSize = self.size + otherArrayElementsCount;
     if (newSize >= self.capacity) {
         if (NO == [self setArrayCapacityTo:newSize]) {
@@ -145,7 +157,7 @@
     if (index != self.size) {
         [self shiftArrayInMemoryFromIndex:index toIndex:index + otherArrayElementsCount];
     }
-
+    
     for (int i = 0; i < otherArrayElementsCount; ++i) {
         int integerInArray = [otherArray objectAtIndex:i];
         *(self.startPointer + i + index) = integerInArray;
@@ -156,6 +168,8 @@
 // MARK: - Removing objects
 
 - (void)removeObjectAtIndex:(NSUInteger)index {
+    // must be >= here
+    // copy/paste programing
     if (index > self.size) {
         NSString *exceptionReason = [NSString stringWithFormat:@"Attempt to access object with index %lu out of arrray bounds", index];
         [[NSException exceptionWithName:@"MutableIntArrayException"
@@ -164,7 +178,7 @@
          raise];
         return;
     }
-
+    
     [self shiftArrayInMemoryFromIndex:index + 1
                               toIndex:index];
     self.size -= 1;
@@ -180,14 +194,14 @@
 }
 
 - (BOOL)setArrayCapacityTo:(NSUInteger)newCapacity {
-
+    
     int *const newStartPointer = [self reallocateMemoryFromPointer:self.startPointer
                                                               size:newCapacity];
-
+    
     if (nil == newStartPointer) {
         return NO;
     }
-
+    
     self.startPointer = newStartPointer;
     self.capacity = newCapacity;
     return YES;
@@ -198,7 +212,7 @@
     int *sourcePointer = self.startPointer + sourceIndex;
     int *destinationPointer = self.startPointer + destinationIndex;
     NSUInteger size = self.size - sourceIndex;
-
+    
     [self moveDataFromPointer:sourcePointer
          toDestinationPointer:destinationPointer
                          size:size];
@@ -209,8 +223,13 @@
 - (BOOL)moveDataFromPointer:(int *)sourcePointer
        toDestinationPointer:(int *)destinationPointer
                        size:(NSUInteger)size {
+    // no, this is a crap.
+    // don't waste memory.
+    // 1. memory allocation is one of the slowest operations
+    // 2. you don't need so much memory - one int is enough
+    
     int *buffer = malloc(sizeof(int) * size);
-
+    
     if (nil == buffer) {
         NSString *exceptionReason = [NSString stringWithFormat:@"Failed to allocate memory for buffer on attempt to move data"];
         [[NSException exceptionWithName:@"MutableIntArrayException"
@@ -219,7 +238,7 @@
          raise];
         return NO;
     }
-
+    
     for (int i = 0; i < size; ++i) {
         *(buffer + i) = *(sourcePointer + i);
     }
@@ -233,7 +252,7 @@
 - (int *)reallocateMemoryFromPointer:(int *)sourcePointer
                                 size:(NSUInteger)size {
     int *destinationPointer = malloc(sizeof(int) * size);
-
+    
     if (nil == destinationPointer) {
         NSString *exceptionReason = [NSString stringWithFormat:@"Failed to allocate memory for reallocating"];
         [[NSException exceptionWithName:@"MutableIntArrayException"
@@ -242,7 +261,7 @@
          raise];
         return nil;
     }
-
+    
     if (NO == [self moveDataFromPointer:sourcePointer
                    toDestinationPointer:destinationPointer
                                    size:size]) {
@@ -256,7 +275,7 @@
 
 - (NSString *)allItemsString {
     NSMutableString *allItemsString = [NSMutableString string];
-
+    
     [allItemsString appendString:@"["];
     for (int i = 0 ; i < self.count; ++i) {
         NSString *integerString = [NSString stringWithFormat:@"%d", [self objectAtIndex:i]];
@@ -266,7 +285,7 @@
         }
     }
     [allItemsString appendString:@"]"];
-
+    
     return allItemsString;
 }
 

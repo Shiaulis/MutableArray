@@ -15,21 +15,81 @@
 
 @implementation MutableIntArrayTests
 
-// MARK: - Tests -
+// MARK: - Initialization Tests -
 
-- (void)testExample {
-    MutableIntArray *array = [[MutableIntArray alloc] init];
-    array = nil;
+- (void)testInitWithZeroCapacity {
+    MutableIntArray *array = [[MutableIntArray alloc] initWithCapacity:0];
+    XCTAssertNotNil(array);
+    XCTAssertTrue(array.capacity == 1);
+    XCTAssertTrue(array.count == 0);
 }
+
+- (void)testInitWithRegularCapacity {
+    NSUInteger const regularCapacity = 20;
+
+    MutableIntArray *array = [[MutableIntArray alloc] initWithCapacity:regularCapacity];
+
+    XCTAssertNotNil(array);
+    XCTAssertTrue(array.capacity == regularCapacity);
+    XCTAssertTrue(array.count == 0);
+}
+
+// I think this test is incorrect for now.
+// We should somehow check an an input parameters
+// before an attempt to create an array
+
+//- (void)testInitWithHugeCapacity {
+//    NSUInteger const hugeCapacity = NSUIntegerMax / 2;
+//
+//    MutableIntArray *array = [[MutableIntArray alloc] initWithCapacity:hugeCapacity];
+//
+//    XCTAssertNil(array);
+//}
+
+- (void)testRegularInit {
+
+    MutableIntArray *array = [[MutableIntArray alloc] init];
+
+    XCTAssertNotNil(array);
+    XCTAssertTrue(array.capacity == 1);
+    XCTAssertTrue(array.count == 0);
+}
+
+// MARK: - Adding integers tests -
+
+- (void)testAddingIntegersToArrayWithFixedCapacity {
+    NSUInteger const fixedCapacity = 20;
+
+    MutableIntArray *array = [[MutableIntArray alloc] initWithCapacity: fixedCapacity];
+
+    for (int i = 0; i < fixedCapacity; ++i) {
+        [array addObject:i];
+        XCTAssertTrue(array.capacity == fixedCapacity);
+        XCTAssertTrue(array.count == i + 1);
+    }
+}
+
+- (void)testAddingIntegersToArrayWithDynamicCapacity {
+    MutableIntArray *array = [[MutableIntArray alloc] init];
+
+    for (int i = 0; i < 1000; ++i) {
+        [array addObject:i];
+        XCTAssertTrue(array.count == i + 1);
+    }
+}
+
 
 // MARK: - Performance tests -
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
+//- (void)testPerformanceExample {
+//    MutableIntArray *array = [[MutableIntArray alloc] init];
+//
+//    [self measureBlock:^{
+//        for (int i = 0; i < 1000; ++i) {
+//            [array addObject:i];
+//        }
+//    }];
+//}
 
 
 // MARK: - Setup and Teardown -

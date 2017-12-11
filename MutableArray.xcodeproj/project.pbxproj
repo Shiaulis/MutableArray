@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		09A3ACEC1FCF41F70000F30F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A3ACEB1FCF41F70000F30F /* main.m */; };
+		09A3ACF71FCF42430000F30F /* MutableIntArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A3ACF61FCF42430000F30F /* MutableIntArray.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,8 @@
 /* Begin PBXFileReference section */
 		09A3ACE81FCF41F70000F30F /* MutableArray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MutableArray; sourceTree = BUILT_PRODUCTS_DIR; };
 		09A3ACEB1FCF41F70000F30F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		09A3ACF51FCF42430000F30F /* MutableIntArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MutableIntArray.h; sourceTree = "<group>"; };
+		09A3ACF61FCF42430000F30F /* MutableIntArray.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MutableIntArray.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				09A3ACEB1FCF41F70000F30F /* main.m */,
+				09A3ACF51FCF42430000F30F /* MutableIntArray.h */,
+				09A3ACF61FCF42430000F30F /* MutableIntArray.m */,
 			);
 			path = MutableArray;
 			sourceTree = "<group>";
@@ -119,6 +124,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09A3ACF71FCF42430000F30F /* MutableIntArray.m in Sources */,
 				09A3ACEC1FCF41F70000F30F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

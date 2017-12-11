@@ -27,6 +27,5 @@
 
 - (void)removeObjectAtIndex:(NSUInteger)index;
 
-- (NSString *)allItemsString;
 
 @end

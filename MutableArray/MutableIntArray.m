@@ -33,17 +33,13 @@
 - (instancetype)initWithCapacity:(NSUInteger)capacity {
     
     if (0 == capacity) {
-        // :))))
-        NSAssert(NO, @"No ability to create array with zero capacity. Capacity '1' will be used instead.");
         capacity = 1;
-        return nil;
     }
     self = [super init];
     
     if (self) {
         _startPointer = malloc(sizeof(int) * capacity);
         if (nil == _startPointer) {
-            NSAssert(NO, @"Failed to allocate memory for an array");
             return nil;
         }
         _capacity = capacity;
@@ -220,33 +216,61 @@
 
 // MARK: - Working with memory -
 
-- (BOOL)moveDataFromPointer:(int *)sourcePointer
+- (void)moveDataFromPointer:(int *)sourcePointer
        toDestinationPointer:(int *)destinationPointer
                        size:(NSUInteger)size {
     // no, this is a crap.
     // don't waste memory.
     // 1. memory allocation is one of the slowest operations
     // 2. you don't need so much memory - one int is enough
-    
-    int *buffer = malloc(sizeof(int) * size);
-    
-    if (nil == buffer) {
-        NSString *exceptionReason = [NSString stringWithFormat:@"Failed to allocate memory for buffer on attempt to move data"];
-        [[NSException exceptionWithName:@"MutableIntArrayException"
-                                 reason:exceptionReason
-                               userInfo:nil]
-         raise];
-        return NO;
+
+    if (sourcePointer == destinationPointer) {
+        return;
     }
-    
-    for (int i = 0; i < size; ++i) {
-        *(buffer + i) = *(sourcePointer + i);
+
+    int *sourceEndPointer = sourcePointer + sizeof(int) * (size - 1);
+    int *destinationEndPointer = destinationPointer + sizeof(int) * (size - 1);
+
+    if (destinationPointer > sourcePointer &&
+             destinationPointer <= sourceEndPointer) {
+        // source memory      __@##########______________
+        // destination memory ___________@##########_____
+        for (int i = 0; i < size; ++i) {
+            *(destinationEndPointer - sizeof(int) * i) = *(sourceEndPointer - sizeof(int) * i);
+        }
     }
-    for (int i = 0; i < size; ++i) {
-        *(destinationPointer + i) = *(buffer + i);
+    else {
+        // source memory      __@##########______________
+        // destination memory ________________@##########
+        // or
+        // source memory      ________________@##########
+        // destination memory __@##########______________
+        // or
+        // source memory      ___________@##########_____
+        // destination memory __@##########______________
+        for (int i = 0; i < size; ++i) {
+            *(destinationPointer + sizeof(int) * i) = *(sourcePointer + sizeof(int) * i);
+        }
     }
-    free(buffer);
-    return YES;
+    return;
+}
+
+void *memory_move(void *dest, const void *src, size_t count)
+{
+    char *tmp = dest;
+    const char *s = src;
+
+    if (dest <= src) {
+        while (count--)
+            *tmp++ = *s++;
+    } else {
+        s += count;
+        tmp += count;
+        while (count--)
+            *--tmp = *--s;
+    }
+
+    return dest;
 }
 
 - (int *)reallocateMemoryFromPointer:(int *)sourcePointer
@@ -261,12 +285,8 @@
          raise];
         return nil;
     }
-    
-    if (NO == [self moveDataFromPointer:sourcePointer
-                   toDestinationPointer:destinationPointer
-                                   size:size]) {
-        return nil;
-    }
+
+    destinationPointer = memory_move(destinationPointer, sourcePointer, size);
     free(sourcePointer);
     return destinationPointer;
 }

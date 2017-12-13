@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		091458CE1FDE9689005DD3CD /* MutableArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 091458CD1FDE9689005DD3CD /* MutableArrayTests.m */; };
 		091458D31FDE9693005DD3CD /* MutableIntArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 097D92B31FDE938500E9739A /* MutableIntArrayTests.m */; };
 		091458D41FDE9733005DD3CD /* MutableIntArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A3ACF61FCF42430000F30F /* MutableIntArray.m */; };
 		09A3ACEC1FCF41F70000F30F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A3ACEB1FCF41F70000F30F /* main.m */; };
@@ -28,11 +27,8 @@
 
 /* Begin PBXFileReference section */
 		091458CB1FDE9689005DD3CD /* MutableArrayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MutableArrayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		091458CD1FDE9689005DD3CD /* MutableArrayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MutableArrayTests.m; sourceTree = "<group>"; };
 		091458CF1FDE9689005DD3CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		097D92B31FDE938500E9739A /* MutableIntArrayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MutableIntArrayTests.m; sourceTree = "<group>"; };
-		097D92BB1FDE943100E9739A /* MutableArrayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MutableArrayTests.m; sourceTree = "<group>"; };
-		097D92BD1FDE943100E9739A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09A3ACE81FCF41F70000F30F /* MutableArray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MutableArray; sourceTree = BUILT_PRODUCTS_DIR; };
 		09A3ACEB1FCF41F70000F30F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		09A3ACF51FCF42430000F30F /* MutableIntArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MutableIntArray.h; sourceTree = "<group>"; };
@@ -60,17 +56,8 @@
 		091458CC1FDE9689005DD3CD /* MutableArrayTests */ = {
 			isa = PBXGroup;
 			children = (
-				091458CD1FDE9689005DD3CD /* MutableArrayTests.m */,
 				091458CF1FDE9689005DD3CD /* Info.plist */,
-			);
-			path = MutableArrayTests;
-			sourceTree = "<group>";
-		};
-		097D92BA1FDE943100E9739A /* MutableArrayTests */ = {
-			isa = PBXGroup;
-			children = (
-				097D92BB1FDE943100E9739A /* MutableArrayTests.m */,
-				097D92BD1FDE943100E9739A /* Info.plist */,
+				097D92B31FDE938500E9739A /* MutableIntArrayTests.m */,
 			);
 			path = MutableArrayTests;
 			sourceTree = "<group>";
@@ -79,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				09A3ACEA1FCF41F70000F30F /* MutableArray */,
-				097D92BA1FDE943100E9739A /* MutableArrayTests */,
 				091458CC1FDE9689005DD3CD /* MutableArrayTests */,
 				09A3ACE91FCF41F70000F30F /* Products */,
 			);
@@ -100,7 +86,6 @@
 				09A3ACEB1FCF41F70000F30F /* main.m */,
 				09A3ACF51FCF42430000F30F /* MutableIntArray.h */,
 				09A3ACF61FCF42430000F30F /* MutableIntArray.m */,
-				097D92B31FDE938500E9739A /* MutableIntArrayTests.m */,
 			);
 			path = MutableArray;
 			sourceTree = "<group>";
@@ -195,7 +180,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				091458D31FDE9693005DD3CD /* MutableIntArrayTests.m in Sources */,
-				091458CE1FDE9689005DD3CD /* MutableArrayTests.m in Sources */,
 				091458D41FDE9733005DD3CD /* MutableIntArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -192,7 +192,8 @@
 - (BOOL)setArrayCapacityTo:(NSUInteger)newCapacity {
     
     int *const newStartPointer = [self reallocateMemoryFromPointer:self.startPointer
-                                                              size:newCapacity];
+                                                        sourceSize:self.capacity
+                                                   destinationSize:newCapacity];
     
     if (nil == newStartPointer) {
         return NO;
@@ -219,11 +220,6 @@
 - (void)moveDataFromPointer:(int *)sourcePointer
        toDestinationPointer:(int *)destinationPointer
                        size:(NSUInteger)size {
-    // no, this is a crap.
-    // don't waste memory.
-    // 1. memory allocation is one of the slowest operations
-    // 2. you don't need so much memory - one int is enough
-
     if (sourcePointer == destinationPointer) {
         return;
     }
@@ -235,8 +231,8 @@
              destinationPointer <= sourceEndPointer) {
         // source memory      __@##########______________
         // destination memory ___________@##########_____
-        for (int i = 0; i < size; ++i) {
-            *(destinationEndPointer - sizeof(int) * i) = *(sourceEndPointer - sizeof(int) * i);
+        for (int i = 0; i < size * sizeof(int); ++i) {
+            *(destinationEndPointer - i) = *(sourceEndPointer - i);
         }
     }
     else {
@@ -248,34 +244,17 @@
         // or
         // source memory      ___________@##########_____
         // destination memory __@##########______________
-        for (int i = 0; i < size; ++i) {
-            *(destinationPointer + sizeof(int) * i) = *(sourcePointer + sizeof(int) * i);
+        for (int i = 0; i < size * sizeof(int); ++i) {
+            *(destinationPointer + i) = *(sourcePointer + i);
         }
     }
     return;
 }
 
-void *memory_move(void *dest, const void *src, size_t count)
-{
-    char *tmp = dest;
-    const char *s = src;
-
-    if (dest <= src) {
-        while (count--)
-            *tmp++ = *s++;
-    } else {
-        s += count;
-        tmp += count;
-        while (count--)
-            *--tmp = *--s;
-    }
-
-    return dest;
-}
-
 - (int *)reallocateMemoryFromPointer:(int *)sourcePointer
-                                size:(NSUInteger)size {
-    int *destinationPointer = malloc(sizeof(int) * size);
+                          sourceSize:(NSUInteger)sourceSize
+                     destinationSize:(NSUInteger)destinationSize {
+    int *destinationPointer = malloc(sizeof(int) * destinationSize);
     
     if (nil == destinationPointer) {
         NSString *exceptionReason = [NSString stringWithFormat:@"Failed to allocate memory for reallocating"];
@@ -285,9 +264,11 @@ void *memory_move(void *dest, const void *src, size_t count)
          raise];
         return nil;
     }
-
-    destinationPointer = memory_move(destinationPointer, sourcePointer, size);
+    [self moveDataFromPointer:sourcePointer
+         toDestinationPointer:destinationPointer
+                         size:sourceSize];
     free(sourcePointer);
+
     return destinationPointer;
 }
 

@@ -46,16 +46,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MutableArray/MutableIntArray.m"
-            timestampString = "534689657.876784"
+            timestampString = "534856539.988901"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
-            landmarkName = "-moveDataFromPointer:toDestinationPointer:size:"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
+            landmarkName = "-reallocateMemoryFromPointer:sourceSize:destinationSize:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -66,11 +66,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MutableArray/MutableIntArray.m"
-            timestampString = "534689657.87818"
+            timestampString = "534856539.989614"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
             landmarkName = "-moveDataFromPointer:toDestinationPointer:size:"
             landmarkType = "7">
          </BreakpointContent>

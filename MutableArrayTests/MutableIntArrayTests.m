@@ -58,7 +58,7 @@
 // MARK: - Adding integers tests -
 
 - (void)testAddingIntegersToArrayWithFixedCapacity {
-    NSUInteger const fixedCapacity = 20;
+    NSUInteger const fixedCapacity = 3;
 
     MutableIntArray *array = [[MutableIntArray alloc] initWithCapacity: fixedCapacity];
 
@@ -77,6 +77,24 @@
         XCTAssertTrue(array.count == i + 1);
     }
 }
+
+// MARK: - Getting integers tests
+
+- (void)testObjectAtIndex {
+    MutableIntArray *array = [[MutableIntArray alloc] init];
+    NSUInteger objectsCount = 10;
+
+    for (int i = 0; i < objectsCount; ++i) {
+        [array addObject:i];
+        XCTAssertTrue(array.count == i + 1);
+    }
+    
+    for (int i = 0; i < objectsCount; ++i) {
+        int objectAtIndex = [array objectAtIndex:i];
+        XCTAssertTrue(objectAtIndex == i);
+    }
+}
+
 
 
 // MARK: - Performance tests -

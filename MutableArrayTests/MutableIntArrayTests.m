@@ -82,7 +82,7 @@
 
 - (void)testObjectAtIndex {
     MutableIntArray *array = [[MutableIntArray alloc] init];
-    NSUInteger objectsCount = 100;
+    NSUInteger const objectsCount = 100;
 
     for (int i = 0; i < objectsCount; ++i) {
         [array addObject:i];
@@ -95,6 +95,85 @@
     }
 }
 
+- (void)testObjectOutOfBounds {
+    MutableIntArray *array = [[MutableIntArray alloc] init];
+    NSUInteger const objectsCount = 10;
+    for (int i = 0; i < objectsCount; ++i) {
+        [array addObject:i];
+        XCTAssertTrue(array.count == i + 1);
+    }
+    
+    @try {
+       [array objectAtIndex:15];
+    }
+    @catch(NSException *exception) {
+        XCTAssertTrue(exception);
+    }
+}
+
+- (void)testInsertObjects {
+    MutableIntArray *array = [[MutableIntArray alloc] init];
+    NSUInteger objectsCount = 10;
+    for (int i = 0; i < objectsCount; ++i) {
+        [array addObject:i];
+        XCTAssertTrue(array.count == i + 1);
+    }
+    int const targetIndex = 5;
+    int const targetValue = 1000;
+    int const expectedCapacity = 16;
+    
+    [array insertObject:targetValue atIndex:targetIndex];
+    ++objectsCount;
+    
+    XCTAssertTrue(array.count == objectsCount);
+    XCTAssertTrue(array.capacity == expectedCapacity);
+    for (int i = 0; i < objectsCount; ++i) {
+        int objectAtIndex = [array objectAtIndex:i];
+        if (i < targetIndex) {
+            XCTAssertTrue(objectAtIndex == i);
+        }
+        else if (i == targetIndex){
+            XCTAssertTrue(objectAtIndex == targetValue);
+        }
+        else {
+            XCTAssertTrue(objectAtIndex == i - 1);
+        }
+    }
+}
+
+- (void)testInsertAnotherArray {
+    MutableIntArray *array = [[MutableIntArray alloc] init];
+    NSUInteger objectsCount = 10;
+    for (int i = 0; i < objectsCount; ++i) {
+        [array addObject:i];
+        XCTAssertTrue(array.count == i + 1);
+    }
+    MutableIntArray *insertedArray = [[MutableIntArray alloc] init];
+    for (int i = 0; i < objectsCount; ++i) {
+        [insertedArray addObject:i * 100];
+        XCTAssertTrue(insertedArray.count == i + 1);
+    }
+    NSUInteger const targetIndex = 5;
+    
+    [array insertMutableIntArray:insertedArray
+                         atIndex:targetIndex];
+    
+    XCTAssertTrue(array.count == objectsCount * 2);
+    XCTAssertTrue(array.capacity == 20);
+    
+    for (int i = 0; i < objectsCount; ++i) {
+        int objectAtIndex = [array objectAtIndex:i];
+        if (i < targetIndex) {
+            XCTAssertTrue(objectAtIndex == i);
+        }
+        else if (i >= targetIndex && i < targetIndex + objectsCount) {
+            XCTAssertTrue(objectAtIndex == (i - targetIndex) * 100);
+        }
+        else {
+            XCTAssertTrue(objectAtIndex == i - objectsCount);
+        }
+    }
+}
 
 
 // MARK: - Performance tests -

@@ -82,7 +82,7 @@
 
 - (void)testObjectAtIndex {
     MutableIntArray *array = [[MutableIntArray alloc] init];
-    NSUInteger objectsCount = 10;
+    NSUInteger objectsCount = 100;
 
     for (int i = 0; i < objectsCount; ++i) {
         [array addObject:i];
@@ -99,15 +99,15 @@
 
 // MARK: - Performance tests -
 
-//- (void)testPerformanceExample {
-//    MutableIntArray *array = [[MutableIntArray alloc] init];
-//
-//    [self measureBlock:^{
-//        for (int i = 0; i < 1000; ++i) {
-//            [array addObject:i];
-//        }
-//    }];
-//}
+- (void)testPerformanceExample {
+    MutableIntArray *array = [[MutableIntArray alloc] init];
+
+    [self measureBlock:^{
+        for (int i = 0; i < 1000; ++i) {
+            [array addObject:i];
+        }
+    }];
+}
 
 
 // MARK: - Setup and Teardown -

@@ -224,14 +224,14 @@
         return;
     }
 
-    int *sourceEndPointer = sourcePointer + sizeof(int) * (size - 1);
-    int *destinationEndPointer = destinationPointer + sizeof(int) * (size - 1);
+    int *sourceEndPointer = sourcePointer + (size - 1);
+    int *destinationEndPointer = destinationPointer + (size - 1);
 
     if (destinationPointer > sourcePointer &&
              destinationPointer <= sourceEndPointer) {
         // source memory      __@##########______________
         // destination memory ___________@##########_____
-        for (int i = 0; i < size * sizeof(int); ++i) {
+        for (int i = 0; i < size; ++i) {
             *(destinationEndPointer - i) = *(sourceEndPointer - i);
         }
     }
@@ -244,7 +244,7 @@
         // or
         // source memory      ___________@##########_____
         // destination memory __@##########______________
-        for (int i = 0; i < size * sizeof(int); ++i) {
+        for (int i = 0; i < size; ++i) {
             *(destinationPointer + i) = *(sourcePointer + i);
         }
     }

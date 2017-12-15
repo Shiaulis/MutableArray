@@ -52,13 +52,14 @@
 
 - (int)objectAtIndex:(NSUInteger)index {
     if (index >= self.size) {
-        // I would use @throw and remove redundand return 0;
         NSString *exceptionReason = [NSString stringWithFormat:@"Attempt to access object with index %lu out of arrray bounds", index];
-        [[NSException exceptionWithName:@"MutableIntArrayException"
-                                 reason:exceptionReason
-                               userInfo:nil]
-         raise];
-        return 0;
+        NSException *exception =
+        [NSException
+         exceptionWithName:@"MutableIntArrayException"
+         reason:exceptionReason
+         userInfo:nil];
+        
+        @throw exception;
     }
     int *objectPtr = self.startPointer + index;
     return *objectPtr;
@@ -68,23 +69,7 @@
 
 - (void)addObject:(int)anInteger {
     if (self.size >= self.capacity) {
-        if (NO == [self doubleArrayCapacity]) {
-            // 1. again, I would just throw and remove return
-            // throw automatically exits this function and rolls back until it is processed in a catch,
-            // or the default handler is reached (crash)
-            //
-            // 2. I would place the throw in doubleArrayCapacity and don't duplicate the code
-            //
-            // 3. I would prefer not to mention current increase size strategy (double)
-            //    in method name. When you decide to use 1.4 instead of 2, would you rename the method?
-            //
-            NSString *exceptionReason = @"Failed to increase array capacity";
-            [[NSException exceptionWithName:@"MutableIntArrayException"
-                                     reason:exceptionReason
-                                   userInfo:nil]
-             raise];
-            return;
-        }
+        [self setArrayCapacityTo:self.capacity * 2];
     }
     
     *(self.startPointer + self.size) = anInteger;
@@ -104,14 +89,7 @@
     }
     
     if (self.size >= self.capacity) {
-        if (NO == [self doubleArrayCapacity]) {
-            NSString *exceptionReason = @"Failed to increase array capacity";
-            [[NSException exceptionWithName:@"MutableIntArrayException"
-                                     reason:exceptionReason
-                                   userInfo:nil]
-             raise];
-            return;
-        }
+        [self setArrayCapacityTo:self.capacity * 2];
     }
     
     if (index != self.size) {
@@ -127,28 +105,21 @@
                       atIndex:(NSUInteger)index {
     if (index > self.size) {
         NSString *exceptionReason = [NSString stringWithFormat:@"Attempt to access object with index %lu out of arrray bounds", index];
-        [[NSException exceptionWithName:@"MutableIntArrayException"
-                                 reason:exceptionReason
-                               userInfo:nil]
-         raise];
-        return;
+        NSException *exception =
+        [NSException
+         exceptionWithName:@"MutableIntArrayException"
+         reason:exceptionReason
+         userInfo:nil];
+        
+        @throw exception;
     }
     
     NSUInteger otherArrayElementsCount = otherArray.count;
-    // still don't understand
-    // не понял. Пустой добавить нельзя. А чего?
     NSParameterAssert(otherArrayElementsCount);
     
     NSUInteger const newSize = self.size + otherArrayElementsCount;
     if (newSize >= self.capacity) {
-        if (NO == [self setArrayCapacityTo:newSize]) {
-            NSString *exceptionReason = @"Failed to increase array capacity";
-            [[NSException exceptionWithName:@"MutableIntArrayException"
-                                     reason:exceptionReason
-                                   userInfo:nil]
-             raise];
-            return;
-        }
+        [self setArrayCapacityTo:newSize];
     }
     if (index != self.size) {
         [self shiftArrayInMemoryFromIndex:index toIndex:index + otherArrayElementsCount];
@@ -185,23 +156,27 @@
 
 // MARK: - Resizing -
 
-- (BOOL)doubleArrayCapacity {
-    return [self setArrayCapacityTo:self.capacity * 2];
-}
-
-- (BOOL)setArrayCapacityTo:(NSUInteger)newCapacity {
+- (void)setArrayCapacityTo:(NSUInteger)newCapacity {
     
-    int *const newStartPointer = [self reallocateMemoryFromPointer:self.startPointer
-                                                        sourceSize:self.capacity
-                                                   destinationSize:newCapacity];
+    int *const newStartPointer =
+    [self
+     reallocateMemoryFromPointer:self.startPointer
+     sourceSize:self.capacity
+     destinationSize:newCapacity];
     
     if (nil == newStartPointer) {
-        return NO;
+        NSString *exceptionReason = @"Failed to increase array capacity";
+        NSException *exception =
+        [NSException
+         exceptionWithName:@"MutableIntArrayException"
+         reason:exceptionReason
+         userInfo:nil];
+        
+        @throw exception;
     }
     
     self.startPointer = newStartPointer;
     self.capacity = newCapacity;
-    return YES;
 }
 
 - (void)shiftArrayInMemoryFromIndex:(NSUInteger)sourceIndex
@@ -295,5 +270,6 @@
     [description appendString:self.allItemsString];
     return [description copy];
 }
+
 @end
 

@@ -116,8 +116,10 @@
         @throw exception;
     }
     
+    if (otherArray.count == 0) {
+        return;
+    }
     NSUInteger otherArrayElementsCount = otherArray.count;
-    NSParameterAssert(otherArrayElementsCount);
     
     NSUInteger const newSize = self.size + otherArrayElementsCount;
     if (newSize >= self.capacity) {

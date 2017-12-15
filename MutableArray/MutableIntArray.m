@@ -81,11 +81,13 @@
              atIndex:(NSUInteger)index {
     if (index > self.size) {
         NSString *exceptionReason = [NSString stringWithFormat:@"Attempt to access object with index %lu out of arrray bounds", index];
-        [[NSException exceptionWithName:@"MutableIntArrayException"
-                                 reason:exceptionReason
-                               userInfo:nil]
-         raise];
-        return;
+        NSException *exception =
+        [NSException
+         exceptionWithName:@"MutableIntArrayException"
+         reason:exceptionReason
+         userInfo:nil];
+        
+        @throw exception;
     }
     
     if (self.size >= self.capacity) {
@@ -135,15 +137,15 @@
 // MARK: - Removing objects
 
 - (void)removeObjectAtIndex:(NSUInteger)index {
-    // must be >= here
-    // copy/paste programing
-    if (index > self.size) {
+    if (index >= self.size) {
         NSString *exceptionReason = [NSString stringWithFormat:@"Attempt to access object with index %lu out of arrray bounds", index];
-        [[NSException exceptionWithName:@"MutableIntArrayException"
-                                 reason:exceptionReason
-                               userInfo:nil]
-         raise];
-        return;
+        NSException *exception =
+        [NSException
+         exceptionWithName:@"MutableIntArrayException"
+         reason:exceptionReason
+         userInfo:nil];
+        
+        @throw exception;
     }
     
     [self shiftArrayInMemoryFromIndex:index + 1

@@ -223,6 +223,23 @@
     }
 }
 
+- (void)testArraySorting {
+    
+    int unsortedIntegers[5] = {1000, 2, 3, 7, 50};
+    int size = sizeof(unsortedIntegers) / sizeof(int);
+    MutableIntArray *unsortedArray =
+    [MutableIntArray
+     initWithIntegers:unsortedIntegers
+     count:size];
+    int sortedIntegers[5] = {2, 3, 7, 50, 1000};
+    MutableIntArray *sortedArray =
+    [MutableIntArray
+     initWithIntegers:sortedIntegers
+     count:size];
+    
+    XCTAssertTrue([sortedArray compareArrayWithArray:unsortedArray.sorted]);
+}
+
 
 
 // MARK: - Performance tests -

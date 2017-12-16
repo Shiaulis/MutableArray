@@ -63,6 +63,10 @@
     return array;
 }
 
+- (MutableIntArray *)sorted {
+    return [self quickSortOfArray:self];
+}
+
 // MARK: - Accessing elements at index -
 
 - (int)objectAtIndex:(NSUInteger)index {
@@ -80,6 +84,22 @@
     return *objectPtr;
 }
 
+// MARK: - Comparing arrays -
+
+- (BOOL)compareArrayWithArray:(MutableIntArray *)comparingArray {
+    if (comparingArray.count != self.count) {
+        return NO;
+    }
+    for (int i = 0; i < self.count; ++i) {
+        int elementAtCurrentArray = [self objectAtIndex:i];
+        int elementAtComparingArray = [comparingArray objectAtIndex:i];
+        if (elementAtCurrentArray != elementAtComparingArray) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 // MARK: - Adding objects -
 
 - (void)addObject:(int)anInteger {
@@ -90,6 +110,10 @@
     *(self.startPointer + self.size) = anInteger;
     
     self.size += 1;
+}
+
+- (void)addArray:(MutableIntArray *)addedArray {
+    [self insertMutableIntArray:addedArray atIndex:self.count];
 }
 
 - (void)insertObject:(int)anInteger
@@ -288,6 +312,29 @@
     NSMutableString *description = [NSMutableString stringWithFormat:@"Arrray with capacity %lu and items count %lu:\n", self.capacity, self.count];
     [description appendString:self.allItemsString];
     return [description copy];
+}
+
+- (MutableIntArray *)quickSortOfArray:(MutableIntArray *)array {
+    if (array.count < 2) {
+        return array;
+    }
+    int const pivot = [array objectAtIndex:0];
+    MutableIntArray *lessArray = [MutableIntArray array];
+    MutableIntArray *greaterArray = [MutableIntArray array];
+    for (int i = 1; i < array.count; ++i) {
+        int const elementAtIndex = [array objectAtIndex:i];
+        if (elementAtIndex <= pivot) {
+            [lessArray addObject:elementAtIndex];
+        }
+        else {
+            [greaterArray addObject:elementAtIndex];
+        }
+    }
+
+    MutableIntArray *resultArray = [self quickSortOfArray:lessArray];
+    [resultArray addObject:pivot];
+    [resultArray addArray:[self quickSortOfArray:greaterArray]];
+    return resultArray;
 }
 
 @end

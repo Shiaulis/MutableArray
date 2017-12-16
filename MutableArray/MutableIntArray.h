@@ -12,15 +12,20 @@
 
 @property (nonatomic, readonly) NSUInteger capacity;
 @property (nonatomic, readonly) NSUInteger count;
+@property (nonatomic, readonly) MutableIntArray *sorted;
 
 - (instancetype)initWithCapacity:(NSUInteger)numItems;
 
 - (int)objectAtIndex:(NSUInteger)index;
 
+- (BOOL)compareArrayWithArray:(MutableIntArray *)array;
+
 - (void)insertObject:(int)anInteger
              atIndex:(NSUInteger)index;
 
 - (void)addObject:(int)anObject;
+
+- (void)addArray:(MutableIntArray *)array;
 
 - (void)insertMutableIntArray:(MutableIntArray *)anIntArray
                       atIndex:(NSUInteger)index;

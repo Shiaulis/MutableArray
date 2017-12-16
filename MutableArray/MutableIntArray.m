@@ -48,6 +48,21 @@
     return self;
 }
 
++ (instancetype)array {
+    return [[MutableIntArray alloc] init];
+}
+
++ (instancetype)initWithIntegers:(int *)integersPointer
+                           count:(int)count {
+    
+    MutableIntArray *array = [[self class] array];
+    
+    for (int i = 0; i < count; ++i) {
+        [array addObject:*(integersPointer + i)];
+    }
+    return array;
+}
+
 // MARK: - Accessing elements at index -
 
 - (int)objectAtIndex:(NSUInteger)index {

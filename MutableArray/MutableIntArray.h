@@ -27,5 +27,9 @@
 
 - (void)removeObjectAtIndex:(NSUInteger)index;
 
++ (instancetype)array;
+
++ (instancetype)initWithIntegers:(int *)integersPointer
+                           count:(int)count;
 
 @end

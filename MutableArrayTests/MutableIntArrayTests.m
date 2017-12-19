@@ -20,8 +20,8 @@
 - (void)testInitWithZeroCapacity {
     MutableIntArray *array = [[MutableIntArray alloc] initWithCapacity:0];
     XCTAssertNotNil(array);
-    XCTAssertTrue(array.capacity == 1);
-    XCTAssertTrue(array.count == 0);
+    XCTAssertEqual(array.capacity, 1);
+    XCTAssertEqual(array.count, 0);
 }
 
 - (void)testInitWithRegularCapacity {
@@ -30,29 +30,17 @@
     MutableIntArray *array = [[MutableIntArray alloc] initWithCapacity:regularCapacity];
 
     XCTAssertNotNil(array);
-    XCTAssertTrue(array.capacity == regularCapacity);
-    XCTAssertTrue(array.count == 0);
+    XCTAssertEqual(array.capacity, regularCapacity);
+    XCTAssertEqual(array.count, 0);
 }
-
-// I think this test is incorrect for now.
-// We should somehow check an an input parameters
-// before an attempt to create an array
-
-//- (void)testInitWithHugeCapacity {
-//    NSUInteger const hugeCapacity = NSUIntegerMax / 2;
-//
-//    MutableIntArray *array = [[MutableIntArray alloc] initWithCapacity:hugeCapacity];
-//
-//    XCTAssertNil(array);
-//}
 
 - (void)testRegularInit {
 
-    MutableIntArray *array = [[MutableIntArray alloc] init];
+    MutableIntArray *array = [MutableIntArray array];
 
     XCTAssertNotNil(array);
-    XCTAssertTrue(array.capacity == 1);
-    XCTAssertTrue(array.count == 0);
+    XCTAssertEqual(array.capacity, 1);
+    XCTAssertEqual(array.count, 0);
 }
 
 // MARK: - Adding integers tests -
@@ -64,161 +52,282 @@
 
     for (int i = 0; i < fixedCapacity; ++i) {
         [array addObject:i];
-        XCTAssertTrue(array.capacity == fixedCapacity);
-        XCTAssertTrue(array.count == i + 1);
+        XCTAssertEqual(array.capacity, fixedCapacity);
+        XCTAssertEqual(array.count, i + 1);
     }
 }
 
 - (void)testAddingIntegersToArrayWithDynamicCapacity {
-    MutableIntArray *array = [[MutableIntArray alloc] init];
+    MutableIntArray *array = [MutableIntArray array];
 
     for (int i = 0; i < 1000; ++i) {
         [array addObject:i];
-        XCTAssertTrue(array.count == i + 1);
+        XCTAssertEqual(array.count, i + 1);
     }
 }
 
 // MARK: - Getting integers tests
 
-- (void)testObjectAtIndex {
-    MutableIntArray *array = [[MutableIntArray alloc] init];
+- (void)testGetObjectAtIndex {
+    MutableIntArray *array = [MutableIntArray array];
     NSUInteger const objectsCount = 100;
 
     for (int i = 0; i < objectsCount; ++i) {
         [array addObject:i];
-        XCTAssertTrue(array.count == i + 1);
+        XCTAssertEqual(array.count, i + 1);
     }
     
     for (int i = 0; i < objectsCount; ++i) {
         int objectAtIndex = [array objectAtIndex:i];
-        XCTAssertTrue(objectAtIndex == i);
+        XCTAssertEqual(objectAtIndex, i);
     }
 }
 
-- (void)testObjectOutOfBounds {
-    MutableIntArray *array = [[MutableIntArray alloc] init];
+- (void)tesGettObjectOutOfBounds {
+    MutableIntArray *array = [MutableIntArray array];
     NSUInteger const objectsCount = 10;
     for (int i = 0; i < objectsCount; ++i) {
         [array addObject:i];
-        XCTAssertTrue(array.count == i + 1);
+        XCTAssertEqual(array.count, i + 1);
     }
-    
-    @try {
-       [array objectAtIndex:15];
-    }
-    @catch(NSException *exception) {
-        XCTAssertTrue(exception);
-    }
+
+    XCTAssertThrows([array objectAtIndex:15]);
 }
+
+// MARK: - Inserting object tests -
 
 - (void)testInsertObjects {
-    MutableIntArray *array = [[MutableIntArray alloc] init];
-    int objectsCount = 10;
+    MutableIntArray *array = [MutableIntArray array];
+    int objectsCount = 1000;
     for (int i = 0; i < objectsCount; ++i) {
         [array addObject:i];
-        XCTAssertTrue(array.count == i + 1);
+        XCTAssertEqual(array.count, i + 1);
     }
-    int const randomTargetIndex = arc4random_uniform(objectsCount);
+    int const targetIndex = 500;
     int const targetValue = 1000;
-    int const expectedCapacity = 16;
-    
-    [array insertObject:targetValue atIndex:randomTargetIndex];
+
+    [array insertObject:targetValue atIndex:targetIndex];
     ++objectsCount;
-    
-    XCTAssertTrue(array.count == objectsCount);
-    XCTAssertTrue(array.capacity == expectedCapacity);
+
+    XCTAssertEqual(array.count, objectsCount);
+
     for (int i = 0; i < objectsCount; ++i) {
         int objectAtIndex = [array objectAtIndex:i];
-        if (i < randomTargetIndex) {
-            XCTAssertTrue(objectAtIndex == i);
+        if (i < targetIndex) {
+            XCTAssertEqual(objectAtIndex, i);
         }
-        else if (i == randomTargetIndex){
-            XCTAssertTrue(objectAtIndex == targetValue);
+        else if (i == targetIndex){
+            XCTAssertEqual(objectAtIndex, targetValue);
         }
         else {
-            XCTAssertTrue(objectAtIndex == i - 1);
+            XCTAssertEqual(objectAtIndex, i - 1);
         }
     }
 }
 
+- (void)testInsertObjectAtTheBeginning {
+    MutableIntArray *array = [MutableIntArray array];
+    int objectsCount = 1000;
+    for (int i = 0; i < objectsCount; ++i) {
+        [array addObject:i];
+        XCTAssertEqual(array.count, i + 1);
+    }
+    int const targetIndex = 0;
+    int const targetValue = 1000;
+
+    [array insertObject:targetValue atIndex:targetIndex];
+    ++objectsCount;
+
+    XCTAssertEqual(array.count, objectsCount);
+
+    for (int i = 0; i < objectsCount; ++i) {
+        int objectAtIndex = [array objectAtIndex:i];
+        if (i == 0) {
+            XCTAssertEqual(objectAtIndex, targetValue);
+        }
+        else {
+            XCTAssertEqual(objectAtIndex, i - 1);
+        }
+    }
+}
+
+- (void)testInsertObjectAtTheEnd {
+    MutableIntArray *array = [MutableIntArray array];
+    int objectsCount = 3;
+    for (int i = 0; i < objectsCount; ++i) {
+        [array addObject:i];
+        XCTAssertEqual(array.count, i + 1);
+    }
+    int const targetIndex = objectsCount - 1;
+    int const targetValue = 666;
+
+    [array insertObject:targetValue atIndex:targetIndex];
+    ++objectsCount;
+
+    XCTAssertEqual(array.count, objectsCount);
+
+    for (int i = 0; i < objectsCount; ++i) {
+        int objectAtIndex = [array objectAtIndex:i];
+        if (i == targetIndex) {
+            XCTAssertEqual(objectAtIndex, targetValue);
+        }
+        else if (i > targetIndex) {
+            XCTAssertEqual(objectAtIndex, i - 1);
+        }
+        else {
+            XCTAssertEqual(objectAtIndex, i);
+        }
+    }
+}
+
+// MARK: - Insert another array tests -
+
 - (void)testInsertAnotherArray {
-    MutableIntArray *array = [[MutableIntArray alloc] init];
+    MutableIntArray *array = [MutableIntArray array];
     int objectsCount = 10;
     for (int i = 0; i < objectsCount; ++i) {
         [array addObject:i];
-        XCTAssertTrue(array.count == i + 1);
+        XCTAssertEqual(array.count, i + 1);
     }
-    MutableIntArray *insertedArray = [[MutableIntArray alloc] init];
+    MutableIntArray *insertedArray = [MutableIntArray array];
     for (int i = 0; i < objectsCount; ++i) {
         [insertedArray addObject:i * 100];
-        XCTAssertTrue(insertedArray.count == i + 1);
+        XCTAssertEqual(insertedArray.count, i + 1);
     }
     NSUInteger const targetIndex = 5;
     
     [array insertMutableIntArray:insertedArray
                          atIndex:targetIndex];
-    
-    XCTAssertTrue(array.count == objectsCount * 2);
-    XCTAssertTrue(array.capacity == 20);
+
+    XCTAssertEqual(array.count, objectsCount * 2);
+    XCTAssertEqual(array.capacity, 20);
     
     for (int i = 0; i < objectsCount; ++i) {
         int objectAtIndex = [array objectAtIndex:i];
         if (i < targetIndex) {
-            XCTAssertTrue(objectAtIndex == i);
+            XCTAssertEqual(objectAtIndex, i);
         }
         else if (i >= targetIndex && i < targetIndex + objectsCount) {
-            XCTAssertTrue(objectAtIndex == (i - targetIndex) * 100);
+            XCTAssertEqual(objectAtIndex, (i - targetIndex) * 100);
         }
         else {
-            XCTAssertTrue(objectAtIndex == i - objectsCount);
+            XCTAssertEqual(objectAtIndex, i = objectsCount);
+        }
+    }
+}
+
+- (void)testInsertAnotherArrayAtTheBegginning {
+    MutableIntArray *array = [MutableIntArray array];
+    int objectsCount = 10;
+    for (int i = 0; i < objectsCount; ++i) {
+        [array addObject:i];
+        XCTAssertEqual(array.count, i + 1);
+    }
+    MutableIntArray *insertedArray = [MutableIntArray array];
+    for (int i = 0; i < objectsCount; ++i) {
+        [insertedArray addObject:i * 100];
+        XCTAssertEqual(insertedArray.count, i + 1);
+    }
+    NSUInteger const targetIndex = 0;
+
+    [array insertMutableIntArray:insertedArray
+                         atIndex:targetIndex];
+
+    XCTAssertEqual(array.count, objectsCount * 2);
+    XCTAssertEqual(array.capacity, 20);
+
+    for (int i = 0; i < objectsCount; ++i) {
+        int objectAtIndex = [array objectAtIndex:i];
+        if (i < targetIndex) {
+            XCTAssertEqual(objectAtIndex, i);
+        }
+        else if (i >= targetIndex && i < targetIndex + objectsCount) {
+            XCTAssertEqual(objectAtIndex, (i - targetIndex) * 100);
+        }
+        else {
+            XCTAssertEqual(objectAtIndex, i - objectsCount);
+        }
+    }
+}
+
+- (void)testInsertAnotherArrayAtTheEnd {
+    MutableIntArray *array = [MutableIntArray array];
+    int objectsCount = 10;
+    for (int i = 0; i < objectsCount; ++i) {
+        [array addObject:i];
+        XCTAssertEqual(array.count, i + 1);
+    }
+    MutableIntArray *insertedArray = [MutableIntArray array];
+    for (int i = 0; i < objectsCount; ++i) {
+        [insertedArray addObject:i * 100];
+        XCTAssertEqual(insertedArray.count, i + 1);
+    }
+    NSUInteger const targetIndex = objectsCount - 1;
+
+    [array insertMutableIntArray:insertedArray
+                         atIndex:targetIndex];
+
+    XCTAssertEqual(array.count, objectsCount * 2);
+    XCTAssertEqual(array.capacity, 20);
+
+    for (int i = 0; i < objectsCount; ++i) {
+        int objectAtIndex = [array objectAtIndex:i];
+        if (i < targetIndex) {
+            XCTAssertEqual(objectAtIndex, i);
+        }
+        else if (i >= targetIndex && i < targetIndex + objectsCount) {
+            XCTAssertEqual(objectAtIndex, (i - targetIndex) * 100);
+        }
+        else {
+            XCTAssertEqual(objectAtIndex, i = objectsCount);
         }
     }
 }
 
 - (void)testInsertAnEmptyArray {
-    MutableIntArray *array = [[MutableIntArray alloc] init];
+    MutableIntArray *array = [MutableIntArray array];
     int objectsCount = 10;
     for (int i = 0; i < objectsCount; ++i) {
         [array addObject:i];
     }
-    MutableIntArray *emptyArray = [[MutableIntArray alloc] init];
+    MutableIntArray *emptyArray = [MutableIntArray array];
 
     NSUInteger const targetRandomIndex = arc4random_uniform(objectsCount);
     
     [array insertMutableIntArray:emptyArray
                          atIndex:targetRandomIndex];
-    
-    XCTAssertTrue(array.count == objectsCount);
+
+    XCTAssertEqual(array.count, objectsCount);
     for (int i = 0; i < objectsCount; ++i) {
         int objectAtIndex = [array objectAtIndex:i];
-        XCTAssertTrue(objectAtIndex == i);
+        XCTAssertEqual(objectAtIndex, i);
     }
 }
 
 // MARK: - Removing objects -
 
 - (void)testRemoveObjectAtIndex {
-    MutableIntArray *array = [[MutableIntArray alloc] init];
+    MutableIntArray *array = [MutableIntArray array];
     int objectsCount = 100;
     
     for (int i = 0; i < objectsCount; ++i) {
         [array addObject:i];
-        XCTAssertTrue(array.count == i + 1);
+        XCTAssertEqual(array.count, i + 1);
     }
     
     int const randomTargetIndex = arc4random_uniform(objectsCount);
     
     [array removeObjectAtIndex:randomTargetIndex];
     --objectsCount;
-    
-    XCTAssertTrue(array.count == objectsCount);
+
+    XCTAssertEqual(array.count, objectsCount);
     for (int i = 0; i < objectsCount; ++i) {
         int objectAtIndex = [array objectAtIndex:i];
         if (i < randomTargetIndex) {
-            XCTAssertTrue(objectAtIndex == i);
+            XCTAssertEqual(objectAtIndex, i);
         }
         else {
-            XCTAssertTrue(objectAtIndex == i + 1);
+            XCTAssertEqual(objectAtIndex, i + 1);
         }
     }
 }
@@ -245,24 +354,13 @@
 // MARK: - Performance tests -
 
 - (void)testPerformance {
-    MutableIntArray *array = [[MutableIntArray alloc] init];
+    MutableIntArray *array = [MutableIntArray array];
 
     [self measureBlock:^{
         for (int i = 0; i < 1000; ++i) {
             [array addObject:i];
         }
     }];
-}
-
-
-// MARK: - Setup and Teardown -
-
-- (void)setUp {
-    [super setUp];
-}
-
-- (void)tearDown {
-    [super tearDown];
 }
 
 @end

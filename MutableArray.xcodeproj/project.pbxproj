@@ -33,6 +33,7 @@
 		09A3ACEB1FCF41F70000F30F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		09A3ACF51FCF42430000F30F /* MutableIntArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MutableIntArray.h; sourceTree = "<group>"; };
 		09A3ACF61FCF42430000F30F /* MutableIntArray.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MutableIntArray.m; sourceTree = "<group>"; };
+		09EA1F2E1FE98518001336A7 /* MutableIntArray+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MutableIntArray+Private.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +87,7 @@
 				09A3ACEB1FCF41F70000F30F /* main.m */,
 				09A3ACF51FCF42430000F30F /* MutableIntArray.h */,
 				09A3ACF61FCF42430000F30F /* MutableIntArray.m */,
+				09EA1F2E1FE98518001336A7 /* MutableIntArray+Private.h */,
 			);
 			path = MutableArray;
 			sourceTree = "<group>";

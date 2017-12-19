@@ -10,7 +10,6 @@
 
 @interface MutableIntArray : NSObject
 
-@property (nonatomic, readonly) NSUInteger capacity;
 @property (nonatomic, readonly) NSUInteger count;
 @property (nonatomic, readonly) MutableIntArray *sorted;
 

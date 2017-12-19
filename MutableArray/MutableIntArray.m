@@ -7,6 +7,7 @@
 //
 
 #import "MutableIntArray.h"
+#import "MutableIntArray+Private.h"
 
 @interface MutableIntArray ()
 

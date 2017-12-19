@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "MutableIntArray.h"
+#import "MutableIntArray+Private.h"
 
 @interface MutableIntArrayTests : XCTestCase
 

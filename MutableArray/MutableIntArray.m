@@ -103,10 +103,11 @@
 // MARK: - Adding objects -
 
 - (void)addObject:(int)anInteger {
-    if (self.size >= self.capacity) {
+    NSCAssert(self.size <= self.capacity, @"Case when size bigger than capacity should be eliminated");
+    if (self.size == self.capacity) {
         [self setArrayCapacityTo:self.capacity * 2];
     }
-    
+
     *(self.startPointer + self.size) = anInteger;
     
     self.size += 1;
@@ -128,11 +129,12 @@
         
         @throw exception;
     }
-    
-    if (self.size >= self.capacity) {
+
+    NSCAssert(self.size <= self.capacity, @"Case when size bigger than capacity should be eliminated");
+    if (self.size == self.capacity) {
         [self setArrayCapacityTo:self.capacity * 2];
     }
-    
+
     if (index != self.size) {
         [self shiftArrayInMemoryFromIndex:index toIndex:index + 1];
     }

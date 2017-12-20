@@ -127,7 +127,6 @@
          exceptionWithName:@"MutableIntArrayException"
          reason:exceptionReason
          userInfo:nil];
-        
         @throw exception;
     }
 

@@ -320,7 +320,8 @@
     if (array.count < 2) {
         return array;
     }
-    int const pivot = [array objectAtIndex:0];
+    int randomIndex = arc4random_uniform((int)array.count);
+    int const pivot = [array objectAtIndex:randomIndex];
     MutableIntArray *lessArray = [MutableIntArray array];
     MutableIntArray *greaterArray = [MutableIntArray array];
     for (int i = 1; i < array.count; ++i) {

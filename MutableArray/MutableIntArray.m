@@ -160,9 +160,9 @@
     if (otherArray.count == 0) {
         return;
     }
-    NSUInteger otherArrayElementsCount = otherArray.count;
+    const NSUInteger otherArrayElementsCount = otherArray.count;
     
-    NSUInteger const newSize = self.size + otherArrayElementsCount;
+    const NSUInteger newSize = self.size + otherArrayElementsCount;
     if (newSize >= self.capacity) {
         [self setArrayCapacityTo:newSize];
     }
@@ -203,7 +203,7 @@
 
 - (void)setArrayCapacityTo:(NSUInteger)newCapacity {
     
-    int *const newStartPointer =
+    int *newStartPointer =
     [self
      reallocateMemoryFromPointer:self.startPointer
      sourceSize:self.capacity
@@ -244,7 +244,7 @@
         return;
     }
 
-    int *sourceEndPointer = sourcePointer + (size - 1);
+    const int *sourceEndPointer = sourcePointer + (size - 1);
     int *destinationEndPointer = destinationPointer + (size - 1);
 
     if (destinationPointer > sourcePointer &&
@@ -320,8 +320,8 @@
     if (array.count < 2) {
         return array;
     }
-    int randomIndex = arc4random_uniform((int)array.count);
-    int const pivot = [array objectAtIndex:randomIndex];
+    const int randomIndex = arc4random_uniform((int)array.count);
+    const int pivot = [array objectAtIndex:randomIndex];
     MutableIntArray *lessArray = [MutableIntArray array];
     MutableIntArray *greaterArray = [MutableIntArray array];
     for (int i = 1; i < array.count; ++i) {

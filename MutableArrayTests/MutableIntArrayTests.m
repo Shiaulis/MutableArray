@@ -333,7 +333,7 @@
     }
 }
 
-- (void)testArraySorting {
+- (void)testArraySortingByQuickSort {
     
     int unsortedIntegers[5] = {1000, 2, 3, 7, 50};
     int size = sizeof(unsortedIntegers) / sizeof(int);
@@ -347,21 +347,26 @@
      initWithIntegers:sortedIntegers
      count:size];
     
-    XCTAssertTrue([sortedArray compareArrayWithArray:unsortedArray.sorted]);
+    XCTAssertTrue([sortedArray compareArrayWithArray:unsortedArray.sortedByQuickSort]);
 }
 
+- (void)testArraySortingBySelectionSort {
 
+    int unsortedIntegers[5] = {1000, 2, 3, 7, 50};
+    int size = sizeof(unsortedIntegers) / sizeof(int);
+    MutableIntArray *unsortedArray =
+    [MutableIntArray
+     initWithIntegers:unsortedIntegers
+     count:size];
+    int sortedIntegers[5] = {2, 3, 7, 50, 1000};
+    MutableIntArray *sortedArray =
+    [MutableIntArray
+     initWithIntegers:sortedIntegers
+     count:size];
 
-// MARK: - Performance tests -
+    MutableIntArray *sortedBySelectionSortArray = unsortedArray.sortedBySelectionSort;
 
-- (void)testPerformance {
-    MutableIntArray *array = [MutableIntArray array];
-
-    [self measureBlock:^{
-        for (int i = 0; i < 1000; ++i) {
-            [array addObject:i];
-        }
-    }];
+    XCTAssertTrue([sortedArray compareArrayWithArray:sortedBySelectionSortArray]);
 }
 
 @end

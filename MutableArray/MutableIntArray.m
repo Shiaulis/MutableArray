@@ -292,30 +292,7 @@
     return destinationPointer;
 }
 
-// MARK: - Output -
-
-- (NSString *)allItemsString {
-    NSMutableString *allItemsString = [NSMutableString string];
-    
-    [allItemsString appendString:@"["];
-    for (int i = 0 ; i < self.count; ++i) {
-        NSString *integerString = [NSString stringWithFormat:@"%d", [self objectAtIndex:i]];
-        [allItemsString appendString:integerString];
-        if (i + 1 < self.count) {
-            [allItemsString appendString:@", "];
-        }
-    }
-    [allItemsString appendString:@"]"];
-    
-    return allItemsString;
-}
-
-- (NSString *)description {
-    NSMutableString *description = [NSMutableString stringWithFormat:@"Arrray with capacity %lu and items count %lu:\n", self.capacity, self.count];
-    [description appendString:self.allItemsString];
-    return [description copy];
-}
-
+// MARK: - Sorting -
 - (MutableIntArray *)quickSortOfArray:(MutableIntArray *)array {
     if (array.count < 2) {
         return array;
@@ -338,6 +315,30 @@
     [resultArray addObject:pivot];
     [resultArray addArray:[self quickSortOfArray:greaterArray]];
     return resultArray;
+}
+
+// MARK: - Output -
+
+- (NSString *)allItemsString {
+    NSMutableString *allItemsString = [NSMutableString string];
+    
+    [allItemsString appendString:@"["];
+    for (int i = 0 ; i < self.count; ++i) {
+        NSString *integerString = [NSString stringWithFormat:@"%d", [self objectAtIndex:i]];
+        [allItemsString appendString:integerString];
+        if (i + 1 < self.count) {
+            [allItemsString appendString:@", "];
+        }
+    }
+    [allItemsString appendString:@"]"];
+    
+    return allItemsString;
+}
+
+- (NSString *)description {
+    NSMutableString *description = [NSMutableString stringWithFormat:@"Arrray with capacity %lu and items count %lu:\n", self.capacity, self.count];
+    [description appendString:self.allItemsString];
+    return [description copy];
 }
 
 @end

@@ -11,7 +11,8 @@
 @interface MutableIntArray : NSObject
 
 @property (nonatomic, readonly) NSUInteger count;
-@property (nonatomic, readonly) MutableIntArray *sorted;
+@property (nonatomic, readonly) MutableIntArray *sortedByQuickSort;
+@property (nonatomic, readonly) MutableIntArray *sortedBySelectionSort;
 
 - (instancetype)initWithCapacity:(NSUInteger)numItems;
 

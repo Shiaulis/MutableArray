@@ -64,9 +64,14 @@
     return array;
 }
 
-- (MutableIntArray *)sorted {
+- (MutableIntArray *)sortedByQuickSort {
     return [self quickSortOfArray:self];
 }
+
+- (MutableIntArray *)sortedBySelectionSort {
+    return [self selectionSortOfArray:self];
+}
+
 
 // MARK: - Accessing elements at index -
 
@@ -293,6 +298,7 @@
 }
 
 // MARK: - Sorting -
+
 - (MutableIntArray *)quickSortOfArray:(MutableIntArray *)array {
     if (array.count < 2) {
         return array;
@@ -301,9 +307,12 @@
     const int pivot = [array objectAtIndex:randomIndex];
     MutableIntArray *lessArray = [MutableIntArray array];
     MutableIntArray *greaterArray = [MutableIntArray array];
-    for (int i = 1; i < array.count; ++i) {
+    for (int i = 0; i < array.count; ++i) {
+        if (i == randomIndex) {
+            continue;
+        }
         int const elementAtIndex = [array objectAtIndex:i];
-        if (elementAtIndex <= pivot) {
+        if (elementAtIndex < pivot) {
             [lessArray addObject:elementAtIndex];
         }
         else {
@@ -315,6 +324,43 @@
     [resultArray addObject:pivot];
     [resultArray addArray:[self quickSortOfArray:greaterArray]];
     return resultArray;
+}
+
+- (int)findIndexOfSmallestElementInArray:(MutableIntArray *)array {
+    if (array.count == 0) {
+        return 0;
+    }
+
+    if (array.count == 1) {
+        return 0;
+    }
+    int indexOfSmallestElement = 0;
+    int smallestElement = [array objectAtIndex:indexOfSmallestElement];
+
+    for (int i = 1; i < array.count; ++i) {
+        const int integerAtIndex = [array objectAtIndex:i];
+        if (integerAtIndex < smallestElement) {
+            smallestElement = integerAtIndex;
+            indexOfSmallestElement = i;
+        }
+    }
+    return indexOfSmallestElement;
+}
+
+- (MutableIntArray *)selectionSortOfArray:(MutableIntArray *)array {
+
+    if (array.count < 2) {
+        return array;
+    }
+    MutableIntArray *sortedArray = [MutableIntArray array];
+    const NSUInteger startedElementsCount = array.count;
+    for (int i = 0; i < startedElementsCount; ++i) {
+        const int indexOfSmallestElement = [self findIndexOfSmallestElementInArray:array];
+        const int integerAtIndex = [array objectAtIndex:indexOfSmallestElement];
+        [sortedArray addObject:integerAtIndex];
+        [array removeObjectAtIndex:indexOfSmallestElement];
+    }
+    return sortedArray;
 }
 
 // MARK: - Output -
